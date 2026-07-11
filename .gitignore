@@ -1,0 +1,35 @@
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.ipynb_checkpoints/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+
+# Virtual environments
+env/
+venv/
+.venv/
+ENV/
+
+# Data: keep docs, ignore raw files
+data/**
+!data/
+!data/**/
+!data/**/README.md
+!data/**/.gitkeep
+
+# Generated artifacts: keep docs, ignore outputs
+artifacts/**
+!artifacts/
+!artifacts/**/
+!artifacts/**/README.md
+!artifacts/**/.gitkeep
+
+# OS / editors
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
