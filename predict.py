@@ -17,7 +17,27 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
+import re
 
+URL_RE = re.compile(r"https?://\S+|www\.\S+")
+EMAIL_RE = re.compile(r"\b[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Z|a-z]{2,}\b")
+PHONE_RE = re.compile(r"\b(?:\+?\d{1,3}[-.\s]?)?\(?\d{3}\)?[-.\s]?\d{3}[-.\s]?\d{4}\b")
+MONEY_RE = re.compile(r"(£|\$|€)\s?\d[\d,\.]*")
+NUM_RE = re.compile(r"\b\d+\b")
+
+def normalize_text(text: str) -> str:
+    if not isinstance(text, str):
+        return ""
+
+    text = text.lower()
+    text = URL_RE.sub(" __url__ ", text)
+    text = EMAIL_RE.sub(" __email__ ", text)
+    text = PHONE_RE.sub(" __phone__ ", text)
+    text = MONEY_RE.sub(" __money__ ", text)
+    text = NUM_RE.sub(" __number__ ", text)
+    text = re.sub(r"[^\w\s]", " ", text)
+    text = re.sub(r"\s+", " ", text).strip()
+    return text
 
 def load_metadata(metadata_path: Path) -> dict:
     if not metadata_path.exists():
